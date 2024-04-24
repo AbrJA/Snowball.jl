@@ -34,7 +34,6 @@ using Test
         end
     end
     stmr = Stemmer("english")
-    @test  stem_all(stmr, "The fisher is fishing the fishes") == "The fisher is fish the fish"
 
     @test stem(stmr, [ "The", "fishers", "are", "fishing", "the", "fishes"]) ==
         [ "The", "fisher", "are", "fish", "the", "fish"]

@@ -1,6 +1,5 @@
 module Snowball
 using Languages
-using WordTokenizers
 using Snowball_jll
 
 export Stemmer, stem, stem_all, stemmer_types
@@ -93,17 +92,6 @@ function stem(stemmer::Stemmer, bstr::AbstractString)::String
     slen = ccall((:sb_stemmer_length, libstemmer), Cint, (Ptr{Cvoid},), stemmer.cptr)
     bytes = unsafe_wrap(Array, sres, Int(slen), own=false)
     String(copy(bytes))
-end
-
-"""
-    stem_all(stemmer::Stemmer, sentence)
-
-tokenize the string with the default tokenizer, and then stem each word
-"""
-function stem_all(stemmer::Stemmer, sentence::AbstractString)::String 
-    tokens = tokenize(sentence)
-    stemmed = stem(stemmer, tokens)
-    join(stemmed, ' ')
 end
 
 stem(stemmer::Stemmer, words::Vector{<:AbstractString})::Vector{String} =
